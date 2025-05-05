@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/informacos.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <title>Secretaria e Defesa Social</title>
+</head>
+<body>
+  <a href="prefeitura1.html"><button>Voltar</button></a>
+  <div class="table">
+    <div class="table_header">
+      <p>Meta</p>
+      <div>
+        <input placeholder="Procurar" id="filtro-nome" />
+        <button class="add_new">+ add</button>
+      </div>
+    </div>
+    <div class="table_section">
+      <table>
+        <thead>
+          <tr>
+            <th>Número</th>
+            <th>Ação</th>
+            <th>Prazo</th>
+            <th>Nome</th>
+            <th>Responsável</th>
+            <th>Status</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const SENHA = "554922";
+
+    async function carregarTabela() {
+      const tabelaBody = document.getElementById("tabela-body");
+      tabelaBody.innerHTML = "";
+
+      const resposta = await fetch("/api/metas");
+      const dadosSalvos = await resposta.json();
+
+      dadosSalvos.forEach((linha) => {
+        const novaLinha = document.createElement("tr");
+        novaLinha.setAttribute("data-id", linha.id);
+        novaLinha.innerHTML = `
+          <td></td>
+          <td>${linha.acao}</td>
+          <td>${linha.prazo}</td>
+          <td>${linha.executor}</td>
+          <td>${linha.responsavel}</td>
+          <td>${linha.status ? "Concluído" : "Pendente"}</td>
+          <td>
+            <button class="edit-btn"><i class="bi bi-pencil-square"></i></button>
+            <button class="delete-btn"><i class="bi bi-trash3-fill"></i></button>
+          </td>
+        `;
+        tabelaBody.appendChild(novaLinha);
+      });
+
+      [...tabelaBody.rows].forEach((row, i) => (row.cells[0].innerText = i + 1));
+
+      adicionarEventos();
+    }
+
+    function adicionarEventos() {
+      editButtonsFunction();
+      deleteButtonsFunction();
+    }
+
+    function editButtonsFunction() {
+      document.querySelectorAll(".edit-btn").forEach((button) => {
+        button.onclick = function () {
+          const senha = prompt("Digite a senha para editar:");
+          if (senha !== SENHA) return alert("Senha incorreta.");
+
+          const row = button.closest("tr");
+          const cells = row.querySelectorAll("td");
+
+          for (let i = 1; i <= 4; i++) {
+            const textoAtual = cells[i].innerText;
+            cells[i].innerHTML = `<input type="text" value="${textoAtual}">`;
+          }
+
+          const textoStatus = cells[5].innerText.toLowerCase();
+          const valor = textoStatus === "concluído" ? "true" : "false";
+          cells[5].innerHTML = `
+            <select>
+              <option value="false" ${valor === "false" ? "selected" : ""}>Pendente</option>
+              <option value="true" ${valor === "true" ? "selected" : ""}>Concluído</option>
+            </select>
+          `;
+
+          button.innerHTML = '<i class="bi bi-check2-square"></i>';
+          button.classList.replace("edit-btn", "save-btn");
+
+          button.onclick = async function () {
+            const id = row.getAttribute("data-id");
+            const cells = row.querySelectorAll("td");
+
+            const linhaAtualizada = {
+              acao: cells[1].querySelector("input").value,
+              prazo: cells[2].querySelector("input").value,
+              executor: cells[3].querySelector("input").value,
+              responsavel: cells[4].querySelector("input").value,
+              status: cells[5].querySelector("select").value === "true"
+            };
+
+            await fetch(`/api/metas/${id}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(linhaAtualizada)
+            });
+
+            carregarTabela();
+          };
+        };
+      });
+    }
+
+    function deleteButtonsFunction() {
+      document.querySelectorAll(".delete-btn").forEach((button) => {
+        button.onclick = async function () {
+          const senha = prompt("Digite a senha para apagar:");
+          if (senha !== SENHA) return alert("Senha incorreta.");
+
+          const row = button.closest("tr");
+          const id = row.getAttribute("data-id");
+
+          await fetch(`/api/metas/${id}`, { method: "DELETE" });
+
+          carregarTabela();
+        };
+      });
+    }
+
+    function addNewRow() {
+      const tabelaBody = document.getElementById("tabela-body");
+      const numeroLinhas = tabelaBody.rows.length + 1;
+
+      const novaLinha = document.createElement("tr");
+      novaLinha.innerHTML = `
+        <td>${numeroLinhas}</td>
+        <td><input type="text" placeholder="Ação" /></td>
+        <td><input type="text" placeholder="Prazo" /></td>
+        <td><input type="text" placeholder="Nome" /></td>
+        <td><input type="text" placeholder="Responsável" /></td>
+        <td>
+          <select>
+            <option value="false">Pendente</option>
+            <option value="true">Concluído</option>
+          </select>
+        </td>
+        <td><button class="save-btn"><i class="bi bi-check2-square"></i></button></td>
+      `;
+      tabelaBody.appendChild(novaLinha);
+
+      novaLinha.querySelector(".save-btn").onclick = async () => {
+        const inputs = novaLinha.querySelectorAll("input");
+        const select = novaLinha.querySelector("select");
+
+        const novaMeta = {
+          acao: inputs[0].value,
+          prazo: inputs[1].value,
+          executor: inputs[2].value,
+          responsavel: inputs[3].value,
+          status: select.value === "true"
+        };
+
+        await fetch("/api/metas", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(novaMeta)
+        });
+
+        carregarTabela();
+      };
+    }
+
+    function filtrarTabela() {
+      const termo = document.getElementById("filtro-nome").value.toLowerCase();
+      const linhas = document.querySelectorAll("#tabela-body tr");
+
+      linhas.forEach((linha) => {
+        const nome = linha.cells[3].innerText.toLowerCase();
+        linha.style.display = nome.includes(termo) ? "" : "none";
+      });
+    }
+
+    window.onload = function () {
+      carregarTabela();
+      document.querySelector(".add_new").addEventListener("click", addNewRow);
+      document.getElementById("filtro-nome").addEventListener("input", filtrarTabela);
+    };
+  </script>
+</body>
+</html>

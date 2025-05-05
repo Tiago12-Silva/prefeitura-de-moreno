@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/prefeitura2.css">
+    <title>Login</title>
+
+    <script>
+        function validarSenha(event) {
+            event.preventDefault(); 
+
+            const inputs = document.querySelectorAll('input');
+            const usuarioDigitado = inputs[0].value; 
+            const senhaDigitada = inputs[1].value;   
+
+            const senhaCorreta = 'defesasocial2705';
+
+            if (usuarioDigitado === '' || senhaDigitada === '') {
+                alert('Por favor, preencha usuário e senha.');
+                return;
+            }
+
+            if (senhaDigitada === senhaCorreta) {
+                window.location.href = 'inicio';
+            } else {
+                alert('Senha incorreta!');
+            }
+        }
+
+        function mostrarOcultarSenha() {
+            const senhaInput = document.getElementById('senha');
+            if (senhaInput.type === 'password') {
+                senhaInput.type = 'text';
+            } else {
+                senhaInput.type = 'password';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <main class="container">
+        <form onsubmit="validarSenha(event)">
+            <h1>login</h1>
+            <div class="inpult-box">
+                <input placeholder="Usuário">
+                <i class="bx bxs-user"></i>
+            </div>
+            <div class="inpult-box" style="position: relative;">
+                <input id="senha" placeholder="senha" type="password">
+                <i class="bx bxs-lock-alt"></i>
+                <!-- botão para mostrar/ocultar senha -->
+                <button type="button" onclick="mostrarOcultarSenha()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+                    👁️
+                </button>
+            </div>
+            <div class="remember-forgot">
+                <label>
+                    <input type="checkbox">
+                    Salvar minha senha?
+                </label>
+                <a href="#"> Esqueci a senha!</a>
+            </div>
+            <button type="submit" class="Login">
+                Login
+            </button>
+            <div class="regrister-link">
+                <p>Não tem uma conta? <a href="">Cadrastre-se</a></p>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

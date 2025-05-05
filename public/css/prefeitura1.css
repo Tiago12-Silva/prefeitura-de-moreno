@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+body{
+    background-color: #224470;
+    height: 100vh;
+    background: url(/imagens/fundoverde.png.jpg) no-repeat center center;
+     background-size: cover;
+  background-attachment: fixed;   
+  width: 100%;
+  margin: 0;
+}
+.interface{
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.flex{      
+    display: block;
+}
+
+/*Estilo do cabeçalho*/
+header{
+    padding: 40px  4%;
+}
+header > .interface {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+header a{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: inline-block;
+}
+header a:hover{
+    color:  #fff;
+    transform: scale(1.08);
+}
+head nav ul{
+    list-style-type: none;
+}
+header nav ul li{
+    display: inline-block;
+    padding: 0 40px;
+}
+   .btn-contato button{
+    padding: 10px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: chartreuse;
+    border: 0;
+    border-radius: 30px;
+}
+.btn-contato button:hover{
+  box-shadow: 0px 0px 8px #04da04;
+}
+h2.titulo{
+    color: #fff;
+    font-size: 38px;
+    text-align: center;
+}
+h2.titulo span{
+    color: #04da04;
+}
+/*estilo do topo do site*/
+ section.topo-do-site{
+    padding: 40px 4%;
+}
+
+section.topo-do-site .flex{
+    align-items: center;
+    justify-content: center;
+}
+.topo-do-site h1{
+     color: #fff;
+     font: 42px;
+     line-height: 40px;
+}
+.topo-do-sito .txt-topo-site h1 span{
+    color:#04da04;
+}
+ .topo-do-site .txt-topo-site p{
+    margin: 40px 0;
+    color: #fff;
+ }
+ .topo-do-site .img-topo-site img{
+    position: relative;
+    animation: flutuar 2s ease-in-out infinite alternate;
+ }
+ @keyframes flutuar {
+    0%{
+        top: 0;
+    }
+    100%{
+        top: 30px;
+    }
+ }
+ /* ESTILOS DAS ESPECIALIDADE */
+ section.especialidades{
+    padding: 40px 4%;
+ }
+ section.especialidades .flex{
+    gap: 60px;
+ }
+
+ .especialidades .especialidades-box{
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px;
+    margin-top: 45px;
+    transition: .2;
+ }
+ .especialidades .especialidades-box:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 8 #fff;
+ }
+
+ .especialidades .especialidades-box i{
+    font-family: 70px;
+    color: #04da04;
+ }
+ .especialidades .especialidades-box h3 {
+    font-size: 28px;
+    margin: 15px 0;
+    border: 2px solid #fff;
+ }
+/* Estilos das especialidades */
+section.especialidades {
+    padding: 40px 4%;
+    display: flex; /* Usando Flexbox para alinhar as caixas lado a lado */
+    justify-content: space-between; /* Distribui o espaço entre as caixas */
+    gap: 20px; /* Espaçamento entre as caixas */
+}
+
+.especialidades .especialidades-box {
+    color: #fff;
+    padding: 40px;
+    flex: 1; /* Faz com que as caixas tenham tamanho flexível */
+    min-width: 250px; /* Garantir que as caixas não fiquem muito pequenas */
+    text-align: center; /* Centraliza o conteúdo dentro das caixas */
+}
+
+.especialidades .especialidades-box i {
+    font-size: 70px;
+}
+/*Estilo sobre*/
+section.sobre{
+    padding: 40px 4%;
+}
+section.sobre .flex{
+    align-items: center;
+    gap: 60px;
+}
+.sobre .txt-sobre{
+  color: #fff;
+}
+.sobre .txt-sobre h2{
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 20px;
+}
+.sobre .txt-sobre h2 span{
+    color:#04da04;
+    display: block;
+}
+.sobre .txt-sobre p{
+    margin: 10px;
+    text-align: justify;
+}
+.sobre .txt-sobre .btn-social button{
+    width: 80px;
+    height: 60px;
+    border-radius: 30px;
+    border: 50%;
+    border: none;
+    background-color: #04da04;
+    font-size: 30px;
+}
+/*contato css*/
+
+.container {
+    width: 420px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 10px;
+    color: #000000;
+    padding: 30px 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    margin: flex;
+  }
+  
+  .container h1 {
+    font-size: 36px;
+    text-align: center;
+  
+  }
+  
+  
+  .inpult-box {
+    position: relative;
+    width: 100%;    
+    height: 50px;
+    margin: 30px
+  }
+  
+  .inpult-box {
+    position: center;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+  }
+  
+  .inpult-box input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 2px solid;
+    border-radius: 40px;
+    outline: none;
+    font-size: 16px;
+    color: #131313;
+    padding: 20px 45px 20px 20px;
+  }
+  
+  
+  .inpult-box input::placeholder {
+    color: #000000;
+  
+  }
+  .inpult-box i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    font-size: 20px;
+  }
+  
+  .remember-forgot{
+    display: flex;
+    justify-content: space-between;
+    margin: -15px 0 15px;
+  }
+  .remember-forgot label input{
+     accent-color: #ffffff;
+     margin-right: 5px;
+  }
+  .login {
+    width: 100px;
+    height: 50px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  }
+  .Login-pagina {
+    display: flex;
+  }
+
