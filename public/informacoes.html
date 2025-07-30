@@ -67,7 +67,6 @@
       });
 
       [...tabelaBody.rows].forEach((row, i) => (row.cells[0].innerText = i + 1));
-
       adicionarEventos();
     }
 
@@ -153,26 +152,20 @@
         <td><input type="text" placeholder="Prazo" /></td>
         <td><input type="text" placeholder="Nome" /></td>
         <td><input type="text" placeholder="Responsável" /></td>
-        <td>
-          <select>
-            <option value="false">Pendente</option>
-            <option value="true">Concluído</option>
-          </select>
-        </td>
+        <td>Pendente</td>
         <td><button class="save-btn"><i class="bi bi-check2-square"></i></button></td>
       `;
       tabelaBody.appendChild(novaLinha);
 
       novaLinha.querySelector(".save-btn").onclick = async () => {
         const inputs = novaLinha.querySelectorAll("input");
-        const select = novaLinha.querySelector("select");
 
         const novaMeta = {
           acao: inputs[0].value,
           prazo: inputs[1].value,
           executor: inputs[2].value,
           responsavel: inputs[3].value,
-          status: select.value === "true"
+          status: false  // Sempre "Pendente"
         };
 
         await fetch("/api/metas", {
